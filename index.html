@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Portfolio de Mathis Thibaut, Administrateur Systemes, Reseaux et Securite. Projets de formation (EPSI Lille) et alternance chez Patoux Equipagri.">
+<title>Mathis Thibaut — Portfolio</title>
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="canonical" href="https://mathis-thibaut.github.io/">
+<meta name="theme-color" content="#0c0e11">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Mathis Thibaut — Administrateur Systèmes, Réseaux &amp; Sécurité">
+<meta property="og:description" content="Portfolio de formation (EPSI Lille, BTS SIO puis Bachelor SysOps ASRBD) et d'alternance chez Patoux Equipagri : 19 projets détaillés en infrastructure, réseau, sécurité et développement.">
+<meta property="og:url" content="https://mathis-thibaut.github.io/">
+<meta property="og:locale" content="fr_FR">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Mathis Thibaut — Portfolio">
+<meta name="twitter:description" content="Administrateur Systèmes, Réseaux &amp; Sécurité — EPSI Lille &amp; Patoux Equipagri.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0c0e11; --surface:#14171b; --surface-2:#1b1f24; --line:#262b31;
+    --text:#e7eaee; --muted:#8d96a1; --muted-2:#5d6570;
+    --accent:#ff9142; --accent-dim:#ff914233;
+    --ok:#57d38c; --warn:#ffcc66; --crit:#ff6b6b;
+    --mono:'JetBrains Mono', ui-monospace, Consolas, monospace;
+    --sans:'IBM Plex Sans', system-ui, -apple-system, sans-serif;
+    --sidebar-w: 272px;
+    --topbar-h: 56px;
+  }
+  @media (prefers-color-scheme: light){
+    :root:not([data-theme="dark"]){
+      --bg:#f4f2ee; --surface:#ffffff; --surface-2:#ece9e3; --line:#dcd8d0;
+      --text:#1b1d1f; --muted:#5b5f63; --muted-2:#84888c;
+      --accent:#c85a12; --accent-dim:#c85a1222;
+      --ok:#1f8a52; --warn:#a5760a; --crit:#c23b3b;
+    }
+  }
+  :root[data-theme="light"]{
+    --bg:#f4f2ee; --surface:#ffffff; --surface-2:#ece9e3; --line:#dcd8d0;
+    --text:#1b1d1f; --muted:#5b5f63; --muted-2:#84888c;
+    --accent:#c85a12; --accent-dim:#c85a1222; --ok:#1f8a52; --warn:#a5760a; --crit:#c23b3b;
+  }
+  :root[data-theme="dark"]{
+    --bg:#0c0e11; --surface:#14171b; --surface-2:#1b1f24; --line:#262b31;
+    --text:#e7eaee; --muted:#8d96a1; --muted-2:#5d6570;
+    --accent:#ff9142; --accent-dim:#ff914233; --ok:#57d38c; --warn:#ffcc66; --crit:#ff6b6b;
+  }
+
+  *{ box-sizing:border-box; }
+  html, body{ height:100%; }
+  body{
+    margin:0; background:var(--bg); color:var(--text);
+    font-family:var(--sans); line-height:1.55;
+  }
+  ::selection{ background:var(--accent-dim); color:var(--text); }
+  a{ color:var(--accent); text-decoration:none; }
+  a:hover{ text-decoration:underline; }
+  a:focus-visible, button:focus-visible{ outline:2px solid var(--accent); outline-offset:2px; border-radius:2px; }
+  code, .mono{ font-family:var(--mono); }
+  h1,h2,h3,h4{ font-family:var(--sans); font-weight:700; text-wrap:balance; margin:0; }
+  p{ margin:0; }
+  ul{ margin:0; padding:0; }
+
+  /* ---------------- APP SHELL ---------------- */
+  .topbar{
+    position:sticky; top:env(safe-area-inset-top,0px); z-index:40;
+    height:var(--topbar-h); display:flex; align-items:center; gap:14px;
+    padding-inline:16px; background:var(--surface); border-bottom:1px solid var(--line);
+  }
+  .topbar .brand{ font-family:var(--mono); font-weight:700; font-size:14px; letter-spacing:.02em; }
+  .topbar .brand .accent{ color:var(--accent); }
+  .navtoggle{
+    display:none; background:none; border:1px solid var(--line); color:var(--text);
+    width:34px; height:34px; border-radius:6px; cursor:pointer; font-size:16px;
+    align-items:center; justify-content:center;
+  }
+  .topbar-spacer{ flex:1; }
+  .topbar-mail{ font-family:var(--mono); font-size:12px; color:var(--muted); }
+  .topbar-links{ display:flex; align-items:center; gap:18px; }
+  .topbar-links a{ font-family:var(--mono); font-size:12px; color:var(--muted); }
+  .topbar-links a:hover{ color:var(--accent); }
+  @media (max-width:640px){ .topbar-mail{ display:none; } }
+
+  .shell{ display:flex; min-height:calc(100% - var(--topbar-h)); }
+
+  .sidebar{
+    width:var(--sidebar-w); flex:none; border-right:1px solid var(--line);
+    background:var(--surface); padding:20px 14px 40px;
+    position:sticky; top:var(--topbar-h); height:calc(100vh - var(--topbar-h)); overflow-y:auto;
+  }
+  .nav-group{ margin-bottom:22px; }
+  .nav-group-title{
+    font-family:var(--mono); font-size:10.5px; letter-spacing:.09em; text-transform:uppercase;
+    color:var(--muted-2); padding:0 10px; margin-bottom:6px;
+  }
+  .nav-group-sub{ font-size:10px; color:var(--muted-2); padding:0 10px 6px; }
+  .nav-link{
+    display:block; padding:8px 10px; border-radius:6px; font-size:13.5px;
+    color:var(--muted); cursor:pointer; border:1px solid transparent;
+  }
+  .nav-link:hover{ color:var(--text); background:var(--surface-2); text-decoration:none; }
+  .nav-link.active{ color:var(--accent); background:var(--accent-dim); border-color:color-mix(in srgb, var(--accent) 35%, transparent); font-weight:600; }
+
+  main.content{ flex:1; min-width:0; padding: 40px 40px 80px; max-width:920px; }
+  @media (max-width: 1000px){
+    main.content{ padding: 28px 20px 60px; }
+  }
+
+  .sidebar-backdrop{ display:none; }
+
+  @media (max-width: 880px){
+    .navtoggle{ display:flex; }
+    .sidebar{
+      position:fixed; left:0; top:var(--topbar-h); height:calc(100vh - var(--topbar-h));
+      transform:translateX(-100%); transition:transform .2s ease; z-index:50;
+      box-shadow:2px 0 24px rgba(0,0,0,.35);
+    }
+    .sidebar.open{ transform:translateX(0); }
+    .sidebar-backdrop.open{
+      display:block; position:fixed; inset:var(--topbar-h) 0 0 0; background:rgba(0,0,0,.45); z-index:45;
+    }
+  }
+
+  [hidden]{ display:none !important; }
+
+  /* ---------------- SHARED PAGE ELEMENTS ---------------- */
+  .eyebrow{
+    font-family:var(--mono); font-size:12px; letter-spacing:.12em; text-transform:uppercase;
+    color:var(--muted); display:flex; align-items:center; gap:8px; margin-bottom:14px;
+  }
+  .eyebrow::before{ content:""; width:7px; height:7px; border-radius:50%; background:var(--ok); box-shadow:0 0 0 3px var(--surface-2); flex:none; }
+  h2.page-title{ font-size:clamp(24px,3.6vw,32px); margin-bottom:8px; }
+  .section-sub{ color:var(--muted); font-size:14.5px; margin-bottom:28px; max-width:64ch; }
+  .lede{ color:var(--muted); max-width:64ch; }
+
+  /* ---------------- HOME ---------------- */
+  .hero-title{ font-size:clamp(32px,5.4vw,52px); line-height:1.05; letter-spacing:-.01em; }
+  .hero-title .accent{ color:var(--accent); }
+  .hero-role{ font-family:var(--mono); color:var(--muted); font-size:clamp(14px,2vw,16px); margin-top:14px; }
+  .hero-lede{ margin-top:18px; max-width:66ch; color:var(--muted); font-size:15.5px; }
+  .statusbar{
+    font-family:var(--mono); font-size:12px; color:var(--muted-2);
+    display:flex; flex-wrap:wrap; gap:6px 18px; padding-bottom:20px; margin-bottom:30px;
+    border-bottom:1px dashed var(--line);
+  }
+  .statusbar span b{ color:var(--ok); font-weight:600; }
+  .stat-row{
+    display:grid; grid-template-columns:repeat(auto-fit,minmax(120px,1fr)); gap:1px;
+    background:var(--line); border:1px solid var(--line); margin-top:34px; border-radius:6px; overflow:hidden;
+  }
+  .stat{ background:var(--surface); padding:14px 16px; }
+  .stat .n{ font-family:var(--mono); font-size:20px; font-weight:700; color:var(--accent); }
+  .stat .l{ font-size:11.5px; color:var(--muted); margin-top:3px; }
+
+  .year-cards{ display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:14px; margin-top:36px; }
+  .year-card{
+    background:var(--surface); border:1px solid var(--line); border-radius:10px; padding:18px;
+    cursor:pointer; display:flex; flex-direction:column; gap:6px;
+  }
+  .year-card:hover{ border-color:var(--accent); }
+  .year-card .yc-label{ font-weight:700; font-size:15px; }
+  .year-card .yc-sub{ font-family:var(--mono); font-size:11.5px; color:var(--muted); }
+  .year-card .yc-count{ font-family:var(--mono); font-size:11px; color:var(--accent); margin-top:6px; }
+
+  .about-grid{ display:grid; grid-template-columns:1.3fr 1fr; gap:40px; margin-top:44px; }
+  @media (max-width:640px){ .about-grid{ grid-template-columns:1fr; } }
+  .about-grid p + p{ margin-top:14px; }
+  .kv-list{ display:flex; flex-direction:column; border:1px solid var(--line); border-radius:8px; overflow:hidden; }
+  .kv-row{ display:flex; justify-content:space-between; gap:12px; padding:11px 15px; font-size:12.5px; border-bottom:1px solid var(--line); background:var(--surface); }
+  .kv-row:last-child{ border-bottom:none; }
+  .kv-row .k{ color:var(--muted); }
+  .kv-row .v{ font-family:var(--mono); text-align:right; }
+
+  /* ---------------- TIMELINE (formation) ---------------- */
+  .timeline{ display:flex; flex-direction:column; border-left:2px solid var(--line); margin-left:6px; }
+  .tl-item{ position:relative; padding:0 0 28px 26px; }
+  .tl-item:last-child{ padding-bottom:0; }
+  .tl-item::before{ content:""; position:absolute; left:-7px; top:2px; width:12px; height:12px; border-radius:50%; background:var(--surface); border:2px solid var(--accent); }
+  .tl-item.current::before{ background:var(--accent); }
+  .tl-date{ font-family:var(--mono); font-size:12px; color:var(--accent); letter-spacing:.04em; }
+  .tl-title{ font-weight:600; margin-top:4px; }
+  .tl-desc{ color:var(--muted); font-size:13.5px; margin-top:4px; max-width:60ch; }
+
+  /* ---------------- SKILLS ---------------- */
+  .skill-group{ margin-bottom:24px; }
+  .skill-group-title{ font-family:var(--mono); font-size:11px; letter-spacing:.08em; text-transform:uppercase; color:var(--muted-2); margin-bottom:12px; }
+  .skill-grid{ display:grid; grid-template-columns:repeat(auto-fill,minmax(250px,1fr)); gap:12px; }
+  .skill-card{ background:var(--surface); border:1px solid var(--line); border-radius:8px; padding:14px 16px; }
+  .skill-head{ display:flex; align-items:baseline; justify-content:space-between; gap:10px; margin-bottom:5px; }
+  .skill-name{ font-weight:600; font-size:14px; }
+  .skill-level{ font-family:var(--mono); font-size:10px; letter-spacing:.05em; text-transform:uppercase; padding:2px 7px; border-radius:99px; white-space:nowrap; }
+  .lvl-autonome{ color:var(--ok); background:color-mix(in srgb, var(--ok) 16%, transparent); }
+  .lvl-solide{ color:var(--warn); background:color-mix(in srgb, var(--warn) 16%, transparent); }
+  .skill-desc{ font-size:12.5px; color:var(--muted); }
+
+  /* ---------------- PROJECT LIST FALLBACK ---------------- */
+  .arc-grid{ display:grid; grid-template-columns:repeat(auto-fill,minmax(260px,1fr)); gap:14px; }
+  .arc-card{ background:var(--surface); border:1px solid var(--line); border-radius:10px; padding:16px 18px; cursor:pointer; display:flex; flex-direction:column; gap:8px; }
+  .arc-card:hover{ border-color:var(--accent); }
+  .arc-card h3{ font-size:14.5px; }
+  .arc-card .arc-tag{ font-family:var(--mono); font-size:10.5px; color:var(--accent); }
+  .arc-card p{ font-size:12.5px; color:var(--muted); }
+
+  /* ---------------- PROJECT DETAIL ---------------- */
+  .back-link{ font-family:var(--mono); font-size:12px; color:var(--muted); display:inline-block; margin-bottom:18px; cursor:pointer; }
+  .back-link:hover{ color:var(--accent); }
+  .proj-tag{
+    font-family:var(--mono); font-size:11px; letter-spacing:.05em; text-transform:uppercase;
+    color:var(--accent); border:1px solid color-mix(in srgb, var(--accent) 40%, transparent);
+    background:var(--accent-dim); padding:3px 9px; border-radius:99px; display:inline-block; margin-bottom:12px;
+  }
+  .proj-tag.flagship{ color:var(--crit); border-color:color-mix(in srgb, var(--crit) 45%, transparent); background:color-mix(in srgb, var(--crit) 12%, transparent); }
+  .proj-title{ font-size:clamp(24px,3.8vw,34px); }
+  .proj-summary{ color:var(--muted); font-size:15px; margin-top:12px; max-width:66ch; }
+  .proj-team{ font-family:var(--mono); font-size:11.5px; color:var(--muted-2); margin-top:10px; }
+  .proj-stack{ display:flex; flex-wrap:wrap; gap:8px; margin-top:18px; }
+  .stack-tag{ font-family:var(--mono); font-size:11px; border:1px solid var(--line); color:var(--muted); padding:4px 10px; border-radius:99px; }
+  .proj-links{ display:flex; gap:16px; margin-top:16px; }
+  .proj-links a{ font-family:var(--mono); font-size:12.5px; }
+
+  .proj-body{ margin-top:32px; display:flex; flex-direction:column; gap:26px; }
+  .proj-section h4{ font-family:var(--mono); font-size:12px; letter-spacing:.06em; text-transform:uppercase; color:var(--accent); margin-bottom:8px; }
+  .proj-section p{ font-size:14.5px; color:var(--text); line-height:1.65; }
+
+  .code-block{ background:var(--surface); border:1px solid var(--line); border-radius:8px; overflow:hidden; margin-top:8px; }
+  .code-block .cb-label{ font-family:var(--mono); font-size:11px; color:var(--muted); padding:9px 14px; border-bottom:1px solid var(--line); background:var(--surface-2); }
+  .code-block pre{ margin:0; padding:16px; overflow-x:auto; font-family:var(--mono); font-size:12.5px; line-height:1.6; color:var(--text); }
+
+  .gallery{ display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:16px; margin-top:10px; }
+  .gallery figure{ margin:0; background:var(--surface); border:1px solid var(--line); border-radius:10px; overflow:hidden; }
+  .gallery img{ display:block; width:100%; height:auto; border-bottom:1px solid var(--line); cursor:zoom-in; }
+  .gallery figcaption{ padding:10px 12px; font-size:12px; color:var(--muted); }
+
+  .proj-nav{ display:flex; justify-content:space-between; margin-top:44px; padding-top:20px; border-top:1px solid var(--line); font-family:var(--mono); font-size:12.5px; }
+
+  /* ---------------- LIGHTBOX ---------------- */
+  .lightbox{ position:fixed; inset:0; background:rgba(5,6,8,.9); z-index:100; display:flex; align-items:center; justify-content:center; padding:24px; cursor:zoom-out; }
+  .lightbox img{ max-width:100%; max-height:100%; border-radius:6px; box-shadow:0 10px 40px rgba(0,0,0,.5); }
+
+  /* ---------------- ALTERNANCE PROJECT GRID ---------------- */
+  .proj-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(250px,1fr)); gap:16px; margin-top:10px; }
+  .proj-card{ background:var(--surface); border:1px solid var(--line); border-radius:10px; padding:18px; display:flex; flex-direction:column; gap:8px; cursor:pointer; }
+  .proj-card:hover{ border-color:var(--accent); }
+  .proj-card .pj-tag{ font-family:var(--mono); font-size:10.5px; color:var(--accent); letter-spacing:.05em; }
+  .proj-card h3{ font-size:15px; }
+  .proj-card p{ font-size:12.5px; color:var(--muted); }
+
+  .incident-cta{
+    background:var(--surface); border:1px solid var(--line); border-radius:10px; padding:22px;
+    display:flex; justify-content:space-between; align-items:center; gap:16px; cursor:pointer; margin-top:10px;
+    flex-wrap:wrap;
+  }
+  .incident-cta:hover{ border-color:var(--crit); }
+  .incident-cta .sev-tag{
+    font-family:var(--mono); font-size:11px; letter-spacing:.08em; text-transform:uppercase;
+    color:var(--crit); border:1px solid color-mix(in srgb, var(--crit) 45%, transparent);
+    background:color-mix(in srgb, var(--crit) 12%, transparent);
+    padding:3px 9px; border-radius:5px; display:inline-block; margin-bottom:8px;
+  }
+  .incident-cta h3{ font-size:17px; }
+  .incident-cta .go{ font-family:var(--mono); font-size:12px; color:var(--muted); }
+
+  /* ---------------- SOFT SKILLS ---------------- */
+  .two-col{ display:grid; grid-template-columns:1fr 1fr; gap:36px; }
+  @media (max-width:640px){ .two-col{ grid-template-columns:1fr; } }
+  .soft-item{ padding:13px 0; border-bottom:1px solid var(--line); }
+  .soft-item:last-child{ border-bottom:none; }
+  .soft-item h4{ margin:0 0 4px; font-size:14px; font-weight:600; }
+  .soft-item p{ font-size:13px; color:var(--muted); }
+  .axis-item{ display:flex; gap:12px; padding:13px 0; border-bottom:1px solid var(--line); }
+  .axis-item:last-child{ border-bottom:none; }
+  .axis-num{ font-family:var(--mono); color:var(--muted-2); font-size:13px; flex:none; padding-top:1px; }
+  .axis-item p{ font-size:13px; color:var(--muted); }
+  .axis-item b{ color:var(--text); }
+
+  /* ---------------- CONTACT ---------------- */
+  .contact-box{
+    background:var(--surface); border:1px solid var(--line); border-radius:10px; padding:30px;
+    display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; gap:20px;
+  }
+  .contact-box h2{ margin-bottom:6px; font-size:21px; }
+  .mail-btn{ font-family:var(--mono); font-size:14px; font-weight:600; background:var(--accent); color:#161005; padding:12px 20px; border-radius:7px; white-space:nowrap; }
+  .mail-btn:hover{ text-decoration:none; filter:brightness(1.08); }
+
+  section.page{ padding-bottom:8px; }
+</style>
+</head>
+<body>
+
+
+<div class="topbar">
+  <button class="navtoggle" id="navToggle" aria-label="Ouvrir la navigation">☰</button>
+  <div class="brand">mthibaut<span class="accent">@</span>portfolio</div>
+  <div class="topbar-spacer"></div>
+  <div class="topbar-links">
+    <a href="https://github.com/mathis-thibaut" target="_blank" rel="noopener">GitHub ↗</a>
+    <div class="topbar-mail">mathisthibaut317@gmail.com</div>
+  </div>
+</div>
+
+<div class="shell">
+  <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+  <nav class="sidebar" id="sidebar">
+    <div class="nav-group">
+      <a class="nav-link" data-route="home">Accueil</a>
+      <a class="nav-link" data-route="formation">Formation</a>
+      <a class="nav-link" data-route="skills">Compétences</a>
+    </div>
+    <div id="navGroups"></div>
+    <div class="nav-group">
+      <a class="nav-link" data-route="softskills">Bilan &amp; regard critique</a>
+      <a class="nav-link" data-route="contact">Contact</a>
+    </div>
+  </nav>
+
+  <main class="content" id="content"></main>
+</div>
+
+<script src="data.js"></script>
+<script>
+(function(){
+  "use strict";
+  var DATA = window.PORTFOLIO_DATA;
+  var content = document.getElementById('content');
+  var sidebar = document.getElementById('sidebar');
+  var backdrop = document.getElementById('sidebarBackdrop');
+
+  function esc(s){
+    return String(s == null ? '' : s).replace(/[&<>"']/g, function(c){
+      return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];
+    });
+  }
+
+  // -------- Build sidebar nav groups from data --------
+  var navGroupsEl = document.getElementById('navGroups');
+  DATA.years.forEach(function(y){
+    var group = document.createElement('div');
+    group.className = 'nav-group';
+    var title = document.createElement('div');
+    title.className = 'nav-group-title';
+    title.textContent = y.label;
+    var sub = document.createElement('div');
+    sub.className = 'nav-group-sub';
+    sub.textContent = y.sub;
+    group.appendChild(title);
+    group.appendChild(sub);
+    DATA.projects.filter(function(p){ return p.year === y.id; }).forEach(function(p){
+      var a = document.createElement('a');
+      a.className = 'nav-link';
+      a.setAttribute('data-route', 'p-' + p.id);
+      a.textContent = p.title;
+      group.appendChild(a);
+    });
+    navGroupsEl.appendChild(group);
+  });
+
+  // -------- Mobile nav toggle --------
+  document.getElementById('navToggle').addEventListener('click', function(){
+    sidebar.classList.toggle('open');
+    backdrop.classList.toggle('open');
+  });
+  backdrop.addEventListener('click', function(){
+    sidebar.classList.remove('open');
+    backdrop.classList.remove('open');
+  });
+
+  // -------- Nav link clicks (event delegation) --------
+  document.addEventListener('click', function(e){
+    var el = e.target.closest('[data-route]');
+    if(el){
+      e.preventDefault();
+      navigate(el.getAttribute('data-route'));
+    }
+    var img = e.target.closest('.gallery img');
+    if(img){
+      openLightbox(img.src, img.alt);
+    }
+  });
+
+  function openLightbox(src, alt){
+    var lb = document.createElement('div');
+    lb.className = 'lightbox';
+    lb.innerHTML = '<img src="' + src + '" alt="' + esc(alt) + '">';
+    lb.addEventListener('click', function(){ lb.remove(); });
+    document.body.appendChild(lb);
+  }
+
+  function findProject(id){
+    for(var i=0;i<DATA.projects.length;i++){ if(DATA.projects[i].id === id) return DATA.projects[i]; }
+    return null;
+  }
+
+  function yearLabel(yid){
+    for(var i=0;i<DATA.years.length;i++){ if(DATA.years[i].id === yid) return DATA.years[i]; }
+    return null;
+  }
+
+  // -------- Page renderers --------
+  function renderHome(){
+    var counts = {};
+    DATA.projects.forEach(function(p){ counts[p.year] = (counts[p.year]||0) + 1; });
+    var yearCardsHtml = DATA.years.map(function(y){
+      return '<div class="year-card" data-route="year-' + y.id + '">' +
+        '<div class="yc-label">' + esc(y.label) + '</div>' +
+        '<div class="yc-sub">' + esc(y.sub) + '</div>' +
+        '<div class="yc-count">' + (counts[y.id]||0) + ' projet' + ((counts[y.id]||0) > 1 ? 's' : '') + ' →</div>' +
+      '</div>';
+    }).join('');
+
+    content.innerHTML =
+    '<header>' +
+      '<div class="statusbar">' +
+        '<span>whoami: <b>mthibaut</b></span>' +
+        '<span>role: <b>Alternant ASR</b></span>' +
+        '<span>formation: <b>B1 → B3 ASRBD</b></span>' +
+        '<span>status: <b>disponible</b></span>' +
+      '</div>' +
+      '<h1 class="hero-title">Mathis <span class="accent">Thibaut</span></h1>' +
+      '<p class="hero-role">Administrateur Systèmes, Réseaux &amp; Sécurité — en formation ASRBD (Bachelor SysOps, EPSI Lille)</p>' +
+      '<p class="hero-lede">19 ans, originaire d\'Amiens. Trois années de formation à l\'EPSI (BTS SIO option SISR puis Bachelor SysOps), en alternance chez Patoux Equipagri où j\'ai piloté la reconstruction complète du SI après un incident critique. Ce portfolio détaille, année par année, les ' + DATA.projects.length + ' projets menés depuis la 1ère année : bases de données, développement web, infrastructure réseau et sécurité.</p>' +
+      '<div class="stat-row">' +
+        '<div class="stat"><div class="n">3</div><div class="l">années de formation</div></div>' +
+        '<div class="stat"><div class="n">' + DATA.projects.length + '</div><div class="l">projets détaillés</div></div>' +
+        '<div class="stat"><div class="n">4</div><div class="l">projets d\'équipe B3 (MSPR)</div></div>' +
+        '<div class="stat"><div class="n">5</div><div class="l">sites gérés en alternance</div></div>' +
+        '<div class="stat"><div class="n">127</div><div class="l">utilisateurs (alternance)</div></div>' +
+      '</div>' +
+    '</header>' +
+    '<div class="year-cards">' + yearCardsHtml + '</div>' +
+    '<div class="about-grid">' +
+      '<div class="body">' +
+        '<p>Je prépare un Bachelor Informatique (parcours ASRBD, RNCP 35594) à l\'EPSI de Lille en apprentissage, après un BTS SIO option SISR dans le même établissement. L\'informatique m\'intéresse depuis le lycée — d\'abord par curiosité, puis plus précisément quand j\'ai compris que ce qui me plaisait, c\'était l\'infrastructure et la sécurité : comprendre comment tient un système, et ce qui se passe quand il tombe.</p>' +
+        '<p>Mon parcours n\'a rien de linéaire : Bac Pro Vente, puis bascule vers la technique. Depuis la 1ère année, j\'ai enchaîné projets de bases de données, développement web et infrastructure réseau, avant de me spécialiser sur la partie systèmes/réseaux/sécurité en 3ème année et en alternance chez Patoux Equipagri, où je couvre un spectre large : support niveau 1, administration Active Directory et M365, sécurité réseau, supervision, et pilotage de projets d\'infrastructure.</p>' +
+      '</div>' +
+      '<div class="kv-list mono">' +
+        '<div class="kv-row"><span class="k">Entreprise</span><span class="v">Patoux Equipagri</span></div>' +
+        '<div class="kv-row"><span class="k">Poste</span><span class="v">Alternant infra &amp; support</span></div>' +
+        '<div class="kv-row"><span class="k">Certification visée</span><span class="v">RNCP 35594</span></div>' +
+        '<div class="kv-row"><span class="k">Option</span><span class="v">SISR</span></div>' +
+        '<div class="kv-row"><span class="k">Localisation</span><span class="v">Amiens / Lille</span></div>' +
+        '<div class="kv-row"><span class="k">Contact</span><span class="v">mathisthibaut317@gmail.com</span></div>' +
+        '<div class="kv-row"><span class="k">GitHub</span><span class="v"><a href="https://github.com/mathis-thibaut" target="_blank" rel="noopener">mathis-thibaut ↗</a></span></div>' +
+      '</div>' +
+    '</div>';
+  }
+
+  function renderFormation(){
+    content.innerHTML =
+    '<div class="eyebrow">Parcours</div>' +
+    '<h2 class="page-title">Formation</h2>' +
+    '<div class="section-sub">Trois années à l\'EPSI Lille, du BTS SIO au Bachelor SysOps, avec un fil rouge : bases de données, développement puis infrastructure/sécurité.</div>' +
+    '<div class="timeline">' +
+      '<div class="tl-item"><div class="tl-date">2020 — 2023</div><div class="tl-title">Baccalauréat Professionnel Vente</div><div class="tl-desc">Lycée Sacré-Cœur, Amiens</div></div>' +
+      '<div class="tl-item"><div class="tl-date">2023 — 2024 · 1ère année</div><div class="tl-title">BTS SIO — option SISR</div><div class="tl-desc">EPSI Lille · bases de données, développement web (HTML/CSS, PHP), premiers projets d\'infrastructure. Stage de 6 semaines chez Noriap.</div></div>' +
+      '<div class="tl-item"><div class="tl-date">2024 — 2025 · 2ème année</div><div class="tl-title">BTS SIO — option SISR (suite)</div><div class="tl-desc">EPSI Lille · approfondissement systèmes/réseaux : téléphonie ToIP/VoIP, administration de bases de données, ateliers pratiques.</div></div>' +
+      '<div class="tl-item current"><div class="tl-date">2025 — 2026 · 3ème année (B3)</div><div class="tl-title">Bachelor SysOps — parcours ASRBD</div><div class="tl-desc">EPSI Lille · titre RNCP 35594, niveau 6. Quatre MSPR en équipe pour NordTransit Logistics (infrastructure, réseau/cloud hybride, base de données, veille technologique) et alternance chez Patoux Equipagri.</div></div>' +
+    '</div>';
+  }
+
+  function renderSkills(){
+    content.innerHTML =
+    '<div class="eyebrow">Stack &amp; compétences</div>' +
+    '<h2 class="page-title">Compétences techniques</h2>' +
+    '<div class="section-sub">Consolidées sur trois ans, de la base de données et du développement web en 1ère année à l\'administration systèmes/réseaux/sécurité en alternance.</div>' +
+    '<div class="skill-group">' +
+      '<div class="skill-group-title">Administration systèmes, réseaux &amp; sécurité</div>' +
+      '<div class="skill-grid">' +
+        sk('Windows Server / Active Directory','autonome','Reconstruction complète d\'un domaine, gestion OU / groupes / GPO, audit de sécurité, migration de profils ProfWiz.') +
+        sk('Microsoft 365 &amp; Entra ID','autonome','Exchange Online, Teams, SharePoint, gestion des licences et du tenant, identités hybrides, MFA, Azure AD Connect.') +
+        sk('Virtualisation VMware ESXi','solide','Architecture, clusters HA, restauration de VM, configuration post-incident, gestion du stockage partagé.') +
+        sk('Réseau &amp; sécurité périmétrique','solide','VLAN, VPN IPsec site-à-site, pare-feu pfSense et Cato Networks (SASE), segmentation par usage.') +
+        sk('Supervision (Zabbix, Grafana)','solide','Déploiement de solutions open-source de monitoring, intégration avec GLPI, dashboards temps réel.') +
+        sk('GLPI (ITSM)','autonome','Installation et configuration complète, ticketing, inventaire, contrats, tableaux de bord.') +
+        sk('Réseau Ubiquiti UniFi','autonome','Administration de 27 équipements (19 switchs + 8 AP), configuration de 11 VLAN.') +
+        sk('Téléphonie IP (Avaya, Asterisk, 3CX)','solide','120 postes Avaya sur 5 sites ; étude SIP/RTP/codecs et PABX Asterisk ; conception 3CX multi-sites.') +
+        sk('PowerShell','solide','Scripts d\'inventaire AD/OS, automatisation, modules Microsoft Graph et ActiveDirectory.') +
+      '</div>' +
+    '</div>' +
+    '<div class="skill-group">' +
+      '<div class="skill-group-title">Développement &amp; bases de données</div>' +
+      '<div class="skill-grid">' +
+        sk('SQL / conception BDD','autonome','Modélisation MCD/MLD, normalisation 3NF, contraintes d\'intégrité, optimisation (index, partitionnement).') +
+        sk('HTML5 / CSS3','autonome','Structure sémantique, mise en forme CSS3, sites et blogs construits from scratch.') +
+        sk('PHP / MySQL','solide','Applications web complètes (authentification, réservation, agenda collaboratif).') +
+        sk('Python','solide','Scripts d\'automatisation et outils CLI, ORM SQLAlchemy, consommation d\'API REST.') +
+      '</div>' +
+    '</div>';
+  }
+  function sk(name, level, desc){
+    return '<div class="skill-card"><div class="skill-head"><span class="skill-name">' + name + '</span>' +
+      '<span class="skill-level lvl-' + level + '">' + (level === 'autonome' ? 'Autonome' : 'Bases solides') + '</span></div>' +
+      '<div class="skill-desc">' + desc + '</div></div>';
+  }
+
+  function renderYear(yid){
+    var y = yearLabel(yid);
+    var isAlt = yid === 'alt';
+    var projects = DATA.projects.filter(function(p){ return p.year === yid; });
+    content.innerHTML =
+    '<div class="eyebrow">' + (isAlt ? 'Alternance' : 'Archive') + '</div>' +
+    '<h2 class="page-title">' + esc(y.label) + '</h2>' +
+    '<div class="section-sub">' + esc(y.sub) + '</div>' +
+    '<div class="arc-grid" id="yearGrid"></div>';
+    var grid = document.getElementById('yearGrid');
+    projects.forEach(function(p){
+      var card = document.createElement('div');
+      card.className = 'arc-card';
+      card.setAttribute('data-route', 'p-' + p.id);
+      card.innerHTML = '<h3>' + esc(p.title) + '</h3><div class="arc-tag">' + esc(p.tag) + '</div><p>' + esc(p.summary) + '</p>';
+      grid.appendChild(card);
+    });
+  }
+
+  function renderProject(id){
+    var p = findProject(id);
+    if(!p){ navigate('home'); return; }
+    var y = yearLabel(p.year);
+    var html = '';
+    html += '<span class="back-link" data-route="year-' + p.year + '">← ' + esc(y.label) + '</span>';
+    html += '<div><span class="proj-tag' + (p.flagship ? ' flagship' : '') + '">' + esc(p.tag) + '</span></div>';
+    html += '<h1 class="proj-title">' + esc(p.title) + '</h1>';
+    html += '<p class="proj-summary">' + esc(p.summary) + '</p>';
+    if(p.team) html += '<div class="proj-team">' + esc(p.team) + '</div>';
+    if(p.stack && p.stack.length){
+      html += '<div class="proj-stack">' + p.stack.map(function(s){ return '<span class="stack-tag">' + esc(s) + '</span>'; }).join('') + '</div>';
+    }
+    if(p.links && p.links.length){
+      html += '<div class="proj-links">' + p.links.map(function(l){ return '<a href="' + esc(l.url) + '" target="_blank" rel="noopener">' + esc(l.label) + ' ↗</a>'; }).join('') + '</div>';
+    }
+    html += '<div class="proj-body">';
+    (p.sections || []).forEach(function(s){
+      html += '<div class="proj-section"><h4>' + esc(s.h) + '</h4><p>' + s.b + '</p></div>';
+    });
+    if(p.code){
+      html += '<div class="proj-section"><div class="code-block"><div class="cb-label">' + esc(p.code.label) + '</div><pre>' + esc(p.code.content) + '</pre></div></div>';
+    }
+    if(p.images && p.images.length){
+      html += '<div class="proj-section"><h4>Preuves &amp; captures</h4><div class="gallery">';
+      p.images.forEach(function(img){
+        html += '<figure><img src="' + esc(img.src) + '" alt="' + esc(img.caption) + '" loading="lazy"><figcaption>' + esc(img.caption) + '</figcaption></figure>';
+      });
+      html += '</div></div>';
+    }
+    html += '</div>';
+
+    // prev/next within same year
+    var siblings = DATA.projects.filter(function(x){ return x.year === p.year; });
+    var idx = siblings.findIndex(function(x){ return x.id === p.id; });
+    var prev = siblings[idx-1], next = siblings[idx+1];
+    html += '<div class="proj-nav">';
+    html += prev ? '<span data-route="p-' + prev.id + '">← ' + esc(prev.title) + '</span>' : '<span></span>';
+    html += next ? '<span data-route="p-' + next.id + '">' + esc(next.title) + ' →</span>' : '<span></span>';
+    html += '</div>';
+
+    content.innerHTML = html;
+  }
+
+  function renderSoftSkills(){
+    content.innerHTML =
+    '<div class="eyebrow">Bilan</div>' +
+    '<h2 class="page-title">Compétences transversales &amp; regard critique</h2>' +
+    '<div class="section-sub">Issu du dossier de validation de l\'alternance chez Patoux Equipagri.</div>' +
+    '<div class="two-col">' +
+      '<div>' +
+        '<div class="soft-item"><h4>Autonomie &amp; prise de responsabilités</h4><p>L\'incident ESXi m\'a confronté à une situation de crise réelle : décisions techniques sans supervision constante, coordination de prestataires multiples.</p></div>' +
+        '<div class="soft-item"><h4>Communication professionnelle</h4><p>Expliquer une situation technique à la direction, rassurer des utilisateurs, négocier avec des prestataires, rédiger des comptes-rendus clairs.</p></div>' +
+        '<div class="soft-item"><h4>Gestion de crise &amp; résilience</h4><p>Mener une reconstruction technique complexe dans des délais contraints, tout en maintenant le support quotidien.</p></div>' +
+        '<div class="soft-item"><h4>Travail en équipe</h4><p>Quatre MSPR menées en groupe de 4 en 3ème année : répartition des rôles, revues croisées, livrables communs sous délai.</p></div>' +
+      '</div>' +
+      '<div>' +
+        '<div class="axis-item"><span class="axis-num">01</span><p><b>Documentation insuffisante en début d\'alternance</b> — discipline systématique adoptée depuis : toute action tracée dans GLPI, toute configuration documentée.</p></div>' +
+        '<div class="axis-item"><span class="axis-num">02</span><p><b>Équilibre entre support récurrent et projets</b> — mise en place de plages horaires dédiées aux projets, en dehors des tickets vraiment critiques.</p></div>' +
+        '<div class="axis-item"><span class="axis-num">03</span><p><b>Lacunes sur la haute disponibilité et le multi-sites</b> révélées par l\'incident ESXi, comblées depuis par la formation et la pratique.</p></div>' +
+      '</div>' +
+    '</div>';
+  }
+
+  function renderContact(){
+    content.innerHTML =
+    '<div class="eyebrow">Contact</div>' +
+    '<h2 class="page-title">Discutons</h2>' +
+    '<div class="section-sub">Disponible pour échanger sur une opportunité, un projet ou une question technique.</div>' +
+    '<div class="contact-box">' +
+      '<div><h2>Mathis Thibaut</h2><p class="lede">Alternant Administrateur Systèmes, Réseaux &amp; Sécurité · EPSI Lille</p></div>' +
+      '<div style="display:flex;flex-wrap:wrap;gap:12px;">' +
+        '<a class="mail-btn" href="mailto:mathisthibaut317@gmail.com">mathisthibaut317@gmail.com</a>' +
+        '<a class="mail-btn" style="background:transparent;color:var(--text);border:1px solid var(--line);" href="https://github.com/mathis-thibaut" target="_blank" rel="noopener">GitHub ↗</a>' +
+      '</div>' +
+    '</div>';
+  }
+
+  // -------- Router --------
+  var routes = {
+    'home': renderHome,
+    'formation': renderFormation,
+    'skills': renderSkills,
+    'softskills': renderSoftSkills,
+    'contact': renderContact
+  };
+
+  function navigate(route){
+    if(location.hash.slice(1) !== route){
+      location.hash = route;
+    } else {
+      render(route);
+    }
+  }
+
+  function render(route){
+    if(!route) route = 'home';
+    if(routes[route]){
+      routes[route]();
+    } else if(route.indexOf('year-') === 0){
+      renderYear(route.slice(5));
+    } else if(route.indexOf('p-') === 0){
+      renderProject(route.slice(2));
+    } else {
+      renderHome();
+    }
+    // active state
+    document.querySelectorAll('.nav-link').forEach(function(a){
+      a.classList.toggle('active', a.getAttribute('data-route') === route);
+    });
+    sidebar.classList.remove('open');
+    backdrop.classList.remove('open');
+    window.scrollTo(0,0);
+    try{
+      var main = document.querySelector('main.content');
+      if(main) main.scrollTop = 0;
+    }catch(e){}
+  }
+
+  window.addEventListener('hashchange', function(){ render(location.hash.slice(1)); });
+  render(location.hash.slice(1) || 'home');
+})();
+</script>
+
+</body>
+</html>
