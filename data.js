@@ -4,8 +4,8 @@ window.PORTFOLIO_DATA = {
   years: [
     { id: "1", label: "1ère année", sub: "BTS SIO — SISR · 2023 / 2024" },
     { id: "2", label: "2ème année", sub: "BTS SIO — SISR · 2024 / 2025" },
-    { id: "3", label: "3ème année", sub: "Bachelor SysOps — ASRBD · 2025 / 2026" },
-    { id: "alt", label: "Alternance", sub: "Patoux Equipagri · 2025 — 2026" }
+    { id: "3", label: "Bachelor ASRBD", sub: "Bachelor SysOps — ASRBD (obtenu) · 2025 / 2026" },
+    { id: "alt", label: "Alternance", sub: "Patoux Equipagri · depuis 2025" }
   ],
 
   projects: [
