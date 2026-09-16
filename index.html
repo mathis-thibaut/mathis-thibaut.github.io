@@ -21,32 +21,32 @@
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root{
-    --bg:#0c0e11; --surface:#14171b; --surface-2:#1b1f24; --line:#262b31;
-    --text:#e7eaee; --muted:#8d96a1; --muted-2:#5d6570;
-    --accent:#ff9142; --accent-dim:#ff914233;
-    --ok:#57d38c; --warn:#ffcc66; --crit:#ff6b6b;
+    --bg:#faf9f6; --surface:#ffffff; --surface-2:#f3f1ec; --line:#e6e2da;
+    --text:#1c1b19; --muted:#615c54; --muted-2:#948e83;
+    --accent:#c2540d; --accent-dim:#c2540d1a;
+    --ok:#1f8a52; --warn:#a5760a; --crit:#c23b3b;
     --mono:'JetBrains Mono', ui-monospace, Consolas, monospace;
     --sans:'IBM Plex Sans', system-ui, -apple-system, sans-serif;
     --sidebar-w: 272px;
     --topbar-h: 56px;
   }
-  @media (prefers-color-scheme: light){
-    :root:not([data-theme="dark"]){
-      --bg:#f4f2ee; --surface:#ffffff; --surface-2:#ece9e3; --line:#dcd8d0;
-      --text:#1b1d1f; --muted:#5b5f63; --muted-2:#84888c;
-      --accent:#c85a12; --accent-dim:#c85a1222;
-      --ok:#1f8a52; --warn:#a5760a; --crit:#c23b3b;
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#15171b; --surface:#1b1e23; --surface-2:#22262c; --line:#2d323a;
+      --text:#e9ebee; --muted:#9aa1a9; --muted-2:#666d75;
+      --accent:#ff9a5c; --accent-dim:#ff9a5c26;
+      --ok:#57d38c; --warn:#ffcc66; --crit:#ff7a7a;
     }
   }
   :root[data-theme="light"]{
-    --bg:#f4f2ee; --surface:#ffffff; --surface-2:#ece9e3; --line:#dcd8d0;
-    --text:#1b1d1f; --muted:#5b5f63; --muted-2:#84888c;
-    --accent:#c85a12; --accent-dim:#c85a1222; --ok:#1f8a52; --warn:#a5760a; --crit:#c23b3b;
+    --bg:#faf9f6; --surface:#ffffff; --surface-2:#f3f1ec; --line:#e6e2da;
+    --text:#1c1b19; --muted:#615c54; --muted-2:#948e83;
+    --accent:#c2540d; --accent-dim:#c2540d1a; --ok:#1f8a52; --warn:#a5760a; --crit:#c23b3b;
   }
   :root[data-theme="dark"]{
-    --bg:#0c0e11; --surface:#14171b; --surface-2:#1b1f24; --line:#262b31;
-    --text:#e7eaee; --muted:#8d96a1; --muted-2:#5d6570;
-    --accent:#ff9142; --accent-dim:#ff914233; --ok:#57d38c; --warn:#ffcc66; --crit:#ff6b6b;
+    --bg:#15171b; --surface:#1b1e23; --surface-2:#22262c; --line:#2d323a;
+    --text:#e9ebee; --muted:#9aa1a9; --muted-2:#666d75;
+    --accent:#ff9a5c; --accent-dim:#ff9a5c26; --ok:#57d38c; --warn:#ffcc66; --crit:#ff7a7a;
   }
 
   *{ box-sizing:border-box; }
@@ -154,6 +154,22 @@
   .stat{ background:var(--surface); padding:14px 16px; }
   .stat .n{ font-family:var(--mono); font-size:20px; font-weight:700; color:var(--accent); }
   .stat .l{ font-size:11.5px; color:var(--muted); margin-top:3px; }
+
+  .photo-grid{ display:grid; grid-template-columns:repeat(4,1fr); gap:10px; margin-top:40px; }
+  .photo-grid a{ position:relative; display:block; aspect-ratio:4/3; border-radius:10px; overflow:hidden; border:1px solid var(--line); background:var(--surface-2); }
+  .photo-grid a:hover{ border-color:var(--accent); }
+  .photo-grid img{ width:100%; height:100%; object-fit:cover; display:block; transition:transform .25s ease; }
+  .photo-grid a:hover img{ transform:scale(1.05); }
+  .photo-grid .pg-label{
+    position:absolute; left:0; right:0; bottom:0; padding:8px 10px 7px;
+    font-family:var(--mono); font-size:11px; color:#fff;
+    background:linear-gradient(to top, rgba(0,0,0,.72), rgba(0,0,0,0));
+  }
+  .photo-grid a:nth-child(1){ grid-column:span 2; grid-row:span 2; }
+  @media (max-width:760px){
+    .photo-grid{ grid-template-columns:repeat(2,1fr); }
+    .photo-grid a:nth-child(1){ grid-column:span 2; grid-row:span 1; }
+  }
 
   .year-cards{ display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:14px; margin-top:36px; }
   .year-card{
@@ -398,6 +414,23 @@
     return null;
   }
 
+  // -------- Homepage photo mosaic --------
+  var PHOTO_PICKS = [
+    { pid: "sisr", src: "sisr-network-diagram.png", label: "Architecture EPSIMediLab" },
+    { pid: "bdd", src: "bdd-home.png", label: "Circuits touristiques" },
+    { pid: "wordpress", src: "burghouse-menu.png", label: "Le BurgHouse" },
+    { pid: "agenda", src: "agenda-trello.png", label: "EPSIGENDA" },
+    { pid: "starfilm", src: "starfilm-menu.png", label: "StarFilm CLI" },
+    { pid: "ntl2", src: "ntl2-network-diagram.jpg", label: "Architecture multi-sites" },
+    { pid: "glpi", src: "glpi-dashboard.png", label: "Déploiement GLPI" },
+    { pid: "zabbix", src: "zabbix-global-view.jpeg", label: "Supervision Zabbix" }
+  ];
+  function photoGridHtml(){
+    return PHOTO_PICKS.map(function(p){
+      return '<a data-route="p-' + p.pid + '"><img src="' + esc(p.src) + '" alt="' + esc(p.label) + '" loading="lazy"><span class="pg-label">' + esc(p.label) + '</span></a>';
+    }).join('');
+  }
+
   // -------- Page renderers --------
   function renderHome(){
     var counts = {};
@@ -429,6 +462,7 @@
         '<div class="stat"><div class="n">127</div><div class="l">utilisateurs (alternance)</div></div>' +
       '</div>' +
     '</header>' +
+    '<div class="photo-grid">' + photoGridHtml() + '</div>' +
     '<div class="year-cards">' + yearCardsHtml + '</div>' +
     '<div class="about-grid">' +
       '<div class="body">' +
